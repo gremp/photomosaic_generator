@@ -1,0 +1,9 @@
+main_image
+source_images
+tile_images
+
+bin
+.zed
+*.env
+*.gob
+output*.png
