@@ -7,3 +7,4 @@ bin
 *.env
 *.gob
 output*.png
+.DS_Store
