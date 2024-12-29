@@ -44,7 +44,7 @@ func MainImageBuilder(tree *kdtree.KDTree) error {
 	imageWidth := (mainImageWidth / mainImagePixelBlock) * mainImagePixelBlock
 	imageHeight := (mainImageHeight / mainImagePixelBlock) * mainImagePixelBlock
 
-	log.Info(mainImageWidth, mainImagePixelBlock, mainImagePixelBlock)
+	log.Info(imageWidth, imageHeight)
 
 	resizedImage, err := tilegenerator.ResizeImage(&mainImage, imageWidth, imageHeight)
 	if err != nil {
