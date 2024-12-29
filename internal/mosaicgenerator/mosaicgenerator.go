@@ -34,11 +34,17 @@ func MainImageBuilder(tree *kdtree.KDTree) error {
 		return fmt.Errorf("failed to open main image: %w", err)
 	}
 
-	mainImageWidth := config.MainImage.Width
-	mainImageHeight := config.MainImage.Height
+	if config.CollageImage.Width%mainImagePixelBlock != 0 || config.CollageImage.Height%mainImagePixelBlock != 0 {
+		return fmt.Errorf("main image width and height should be divisible by tile size")
+	}
+
+	mainImageWidth := config.CollageImage.Width / mainImagePixelBlock
+	mainImageHeight := config.CollageImage.Height / mainImagePixelBlock
 
 	imageWidth := (mainImageWidth / mainImagePixelBlock) * mainImagePixelBlock
 	imageHeight := (mainImageHeight / mainImagePixelBlock) * mainImagePixelBlock
+
+	log.Info(mainImageWidth, mainImagePixelBlock, mainImagePixelBlock)
 
 	resizedImage, err := tilegenerator.ResizeImage(&mainImage, imageWidth, imageHeight)
 	if err != nil {
@@ -94,7 +100,7 @@ func buildImage(resizedImage image.Image, tree *kdtree.KDTree) error {
 		}
 	}
 
-	if err := imaging.Save(drawableImage, path.Join(convertedImagePath, "..", "output.png")); err != nil {
+	if err := imaging.Save(drawableImage, path.Join(convertedImagePath, "output.jpg"), imaging.JPEGQuality(90)); err != nil {
 		return fmt.Errorf("failed to save image: %w", err)
 	}
 

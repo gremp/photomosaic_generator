@@ -28,8 +28,6 @@ type Server struct {
 
 type MainImage struct {
 	SourcePath string
-	Width      int
-	Height     int
 }
 
 type TileImages struct {
@@ -42,6 +40,8 @@ type CollageImage struct {
 	PixelBlock       int
 	SameTileDistance int
 	CollagePath      string
+	Width            int
+	Height           int
 }
 
 type Config struct {
@@ -101,18 +101,18 @@ func setEnvVariables(configInstance *Config) {
 	configInstance.TileImages.TileSize = tileSize
 
 	// CollageImage
-	width, err := strconv.Atoi(os.Getenv("MAIN_IMAGE_WIDTH"))
+	width, err := strconv.Atoi(os.Getenv("GENERATED_IMAGE_WIDTH"))
 	if err != nil {
 		panic(fmt.Errorf("failed to parse main image width: %w", err))
 	}
-	configInstance.MainImage.Width = width
+	configInstance.CollageImage.Width = width
 
-	height, err := strconv.Atoi(os.Getenv("MAIN_IMAGE_HEIGHT"))
+	height, err := strconv.Atoi(os.Getenv("GENERATED_IMAGE_HEIGHT"))
 	if err != nil {
 		panic(fmt.Errorf("failed to parse main image height: %w", err))
 	}
 
-	configInstance.MainImage.Height = height
+	configInstance.CollageImage.Height = height
 	pixelBlock, err := strconv.Atoi(os.Getenv("COLLAGE_IMAGE_PIXEL_BLOCK"))
 	if err != nil {
 		panic(fmt.Errorf("failed to parse main image tile step: %w", err))
